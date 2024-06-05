@@ -123,20 +123,20 @@
         <h2 class="text-center mb-4">Contact Us</h2>
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <form>
+                <form id="form">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" required>
+                        <input type="text" class="form-control" name="from_name" id="from_name" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" required>
+                        <input type="email" class="form-control" name="email_id" id="email_id" required>
                     </div>
                     <div class="mb-3">
                         <label for="message" class="form-label">Message</label>
-                        <textarea class="form-control" id="message" rows="4" required></textarea>
+                        <textarea class="form-control" name="message" id="message" rows="4" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button type="submit" id="button" class="btn btn-primary">Send</button>
                 </form>
             </div>
         </div>
@@ -150,5 +150,31 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        emailjs.init('0-cgtnNFlx_pKMXST')
+    </script>
+    <script>
+        const btn = document.getElementById('button');
+
+        document.getElementById('form')
+        .addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        btn.value = 'Sending...';
+
+        const serviceID = 'service_f0e93l7';
+        const templateID = 'template_s96r3jo';
+
+        emailjs.sendForm(serviceID, templateID, this)
+            .then(() => {
+            btn.value = 'Send Email';
+            alert('Sent!');
+            }, (err) => {
+            btn.value = 'Send Email';
+            alert(JSON.stringify(err));
+            });
+        });
+    </script>
 </body>
 </html>
